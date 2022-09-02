@@ -449,7 +449,7 @@ In our case, this returns the mapping
 ```python
 [3,5,8].
 ```
-
+##Weights
 Additionally, we can introduce weights for each of the frequency collisions. Without weights, all collisions are counted as the same. In practice though, different collisions can have a vastly different impact. Therefore, one could e.g. guess the weight of each collision or run benchmark circuits.
 The weights should have the form of a dictionary analogous to the collision dictionary. 
 As an example, we ran benchmark circuits to estimate the impact of each frequency collision. The weight dictionary is then given as
@@ -475,6 +475,27 @@ This returns again the layout
 [3, 5, 8]
 ```
 While it did not make a difference in this example, it is valuable to have the option to give each collision a weight. This might become especially important for larger, more complicated circuits or for very strong and harmful frequency collisions.
+Now arises the question: how to compute the weights?
+There is no rule how to compute the weights. What we recommend is running benchmarking circuits and taking the error rate(or infidelity) as a weight to capture the impact.
+For nearest-neighbor type collisions (every collision type except 5 and 6) we choose for example the following 2-Qubit circuit:
+```python
+qc_NN=QuantumCircuit(2)
+qc_NN.h(0)
+qc_NN.cx(0,1)
+qc_NN.measure_all()
+```
+For next-to-nearest-neighbor types of collisions (types 5 and 6) we propose the following 3-Qubit circuit
+```python
+qc_NNN=QuantumCircuit(3)
+qc_NNN.h(0)
+qc_NNN.cx(0,1)
+qc_NNN.x(2)
+qc_NNN.measure_all()
+```
+For the choice of mapping of these circuits, the nearest-neighbor types of collisions can directly be run on the 2 Qubits shown in the collisions dictionary.
+Regarding the next-to-nearest-neighbor circuits, we have to add one qubit since there are only 2 Qubits inside the dictionary. For the third one, we choose the Qubit which is directly connected to both of the ductionary qubits (this can be easily determined using the connectivity information, which can e.g. be seen on the IBM Quantum website https://quantum-computing.ibm.com/services/resources?tab=systems ).
+
+## cost-function methods
 We can also slightly change the method by which the score is evaluated. The standard value of the keywordargument of the `best_fc_mapping` function is `method=1`. By changing it to `method=2`, we change to a slightly modified cost function. When using the second method for the cost function
 ```python
 mm.detect_fc.best_fc_mapping(scores,collision_dict,0.01,weight=weights_cairo,method=2)
