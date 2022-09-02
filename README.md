@@ -483,7 +483,7 @@ we obtain an alternative recommendation
 ```python
 [11, 14, 13].
 ```
-A priori it is not clear which of the presented methods is better. But it is useful to know that there are slightly different approaches.
+A priori it is not clear which of the presented methods is better. They difference between them is the following: when choosing method 1, we count a collision into the score as soon as one of the potentially harmful qubit-pair is on the mapping, so-to-say we look at intersections of mapping-qubits and collision-qubits. When choosing method 2, we only count a collision into the score if the full collision-qubit pair is inside the mapping; so-to-say if the collision qubits are a subset of the mapping qubits.
 
 ### Cutting out Layouts affected by collisions
 
