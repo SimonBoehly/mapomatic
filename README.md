@@ -450,9 +450,9 @@ In our case, this returns the mapping
 [3,5,8].
 ```
 
-Additionally, we can introduce weights for each of the frequency collisions. Without weights, all collisions are counted as the same. In practice though, different collisions can have a vastly different impact. Therefore, one could e.g. guess the weight of each collision or run calibration circuits.
+Additionally, we can introduce weights for each of the frequency collisions. Without weights, all collisions are counted as the same. In practice though, different collisions can have a vastly different impact. Therefore, one could e.g. guess the weight of each collision or run benchmark circuits.
 The weights should have the form of a dictionary analogous to the collision dictionary. 
-As an example, we ran calibration circuits to estimate the impact of each frequency collision. The weight dictionary is then given as
+As an example, we ran benchmark circuits to estimate the impact of each frequency collision. The weight dictionary is then given as
 
 ```python
 weights_cairo={0: [],
