@@ -479,7 +479,7 @@ We can also slightly change the method by which the score is evaluated. The stan
 ```python
 mm.detect_fc.best_fc_mapping(scores,collision_dict,0.01,weight=weights_cairo,method=2)
 ```
-we obtain an alternativy recommendation
+we obtain an alternative recommendation
 ```python
 [11, 14, 13].
 ```
